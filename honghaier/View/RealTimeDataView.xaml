@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="honghaier.View.RealTimeDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ext="http://schemas.abtsoftware.co.uk/scichart/exampleExternals"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:s="http://schemas.abtsoftware.co.uk/scichart"
+             xmlns:local="clr-namespace:honghaier.View"
+             Loaded="OnExampleLoaded"
+             Unloaded="OnExampleUnloaded"
+             d:DesignHeight="400"
+             d:DesignWidth="600"
+             mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <UserControl.Resources>
+        <!--  Converter used by feedback panel below SciChartSurface  -->
+        <s:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+
+        <!--  Common TextBlock style, uses ColorToBrushConverter to convert RenderableSeries.Stroke to a brush for textblocks  -->
+        <Style x:Key="tbStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="2,4" />
+            <Setter Property="Foreground" Value="{Binding Stroke, Converter={StaticResource ColorToBrushConverter}}" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <GroupBox Grid.Row="0" Grid.Column="0">
+                    <GroupBox.Header>
+                        <Label Content="系统状态"></Label>
+                    </GroupBox.Header>
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Label Margin="10,11,0,0" Content="分片状态"></Label>
+                        <Label Margin="80,11,50,0" Foreground="DarkSeaGreen" FontWeight="Bold" Content="OK"></Label>
+                        <Label Margin="10,31,0,0" Content="设置转速"></Label>
+                        <Label Margin="80,31,50,0" Foreground="DarkSeaGreen" FontWeight="Bold" Content="600"></Label>
+                        <Label Margin="10,51,0,0" Content="实测转速"></Label>
+                        <Label Margin="80,51,50,0" Foreground="DarkSeaGreen" FontWeight="Bold" Content="600"></Label>
+                        <Label Margin="10,71,0,0" Content="计算转速"></Label>
+                        <Label Margin="80,71,50,0" Foreground="DarkSeaGreen" FontWeight="Bold" Content="600"></Label>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Grid.Column="0">
+                    <GroupBox.Header>
+                        <Label Content="图形配置"></Label>
+                    </GroupBox.Header>
+                    <Grid>
+                        <CheckBox Content="分片数据" HorizontalAlignment="Left"
+                          Margin="10,11,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="原始数据" HorizontalAlignment="Left"
+                          Margin="10,31,0,0" VerticalAlignment="Top"/>
+                        <CheckBox Content="托盘样式" HorizontalAlignment="Left"
+                          Margin="10,51,0,0" VerticalAlignment="Top"/>
+                    </Grid>
+                    
+                </GroupBox>
+            </Grid>
+        </Grid>
+        <GridSplitter Grid.Row="0" Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+        <Grid Grid.Row="0" Grid.Column="2">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <!--  Define a SciChartSurface with RolloverModifier  -->
+                <local:CustomTable x:Name="sciChartSurface0" Grid.Row="0" Grid.Column="0"></local:CustomTable>
+                <local:CustomTable x:Name="sciChartSurface1" Grid.Row="1" Grid.Column="0"></local:CustomTable>
+                <local:CustomTable x:Name="sciChartSurface2" Grid.Row="2" Grid.Column="0"></local:CustomTable>
+                <local:CustomTable x:Name="sciChartSurface3" Grid.Row="3" Grid.Column="0"></local:CustomTable>
+                
+            </Grid>
+            <GridSplitter Grid.Row="0" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="DarkGray"/>
+            <Grid Grid.Row="0" Grid.Column="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <local:CustomTable x:Name="sciChartSurface4" Grid.Row="0" Grid.Column="0"></local:CustomTable>
+                <local:CustomTable x:Name="sciChartSurface5" Grid.Row="1" Grid.Column="0"></local:CustomTable>
+                <local:CustomTable x:Name="sciChartSurface6" Grid.Row="2" Grid.Column="0"></local:CustomTable>
+                <local:CustomTable x:Name="sciChartSurface7" Grid.Row="3" Grid.Column="0"></local:CustomTable>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

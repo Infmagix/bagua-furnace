@@ -1,0 +1,92 @@
+﻿<Window x:Class="honghaier.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:honghaier"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:honghaier.View="clr-namespace:honghaier.View"
+        mc:Ignorable="d" Icon="honghaier.ico"
+        Title="Honghaier (1.0.2.1)" Height="500" Width="800" Closed="Window_Closed">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0" Content="Pause" Name="PauseResume" Click="PauseResume_Click" HorizontalAlignment="Left"/>
+        <Button Grid.Column="2" Content="Reload" Name="Reload" Click="Reload_Click" HorizontalAlignment="Right" IsEnabled="False"/>
+        
+        <!--<ScrollViewer Grid.Column="1" Visibility="Collapsed">
+            <Expander Header="PID Table">
+                <TabControl DockPanel.Dock="Top" x:Name="PIDTabControl">
+                    <TabItem Header="Zone0" x:Name="Zone0View">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="Index"/>
+                                <TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="LowerLimit"/>
+                                <TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="UpperLimit"/>
+                                <TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="    Kp    "/>
+                                <TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="    Ki    "/>
+                                <TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="    Kd    "/>
+                                <TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="MAXOUT"/>
+                                <TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Zone1" x:Name="Zone1View">
+
+                    </TabItem>
+                    <TabItem Header="Zone2" x:Name="Zone2View">
+
+                    </TabItem>
+                    <TabItem Header="Zone3" x:Name="Zone3View">
+
+                    </TabItem>
+                </TabControl>
+                --><!--<StackPanel Orientation="Vertical">
+                    <Expander Name="AlgCfgGroupBox" Header="算法配置">
+                        <StackPanel Name="AlgCfgStackPanel" Orientation="Vertical" HorizontalAlignment="Right" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                    </Expander>
+                    <Border Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                </StackPanel>--><!--
+            </Expander>
+        </ScrollViewer>-->
+        
+        <!--<Grid Grid.Column="1">
+            <TabControl DockPanel.Dock="Top">
+                <TabItem Header="PID Table" x:Name="PIDTable"/>
+            </TabControl>
+        </Grid>-->
+        
+        <ScrollViewer Grid.Column="1">
+            <Expander Name="PIDTableExpander" Header="PID Table">
+                <!--<TabControl DockPanel.Dock="Top" Name="PIDTabControl">
+                    <TabItem x:Name="PIDTable_Zone0View"/>
+                    --><!--<TabItem Header="Zone1" x:Name="PIDTable_Zone1View"/>--><!--
+                </TabControl>-->
+            </Expander>
+        </ScrollViewer>
+    </Grid>
+
+</Window>

@@ -1,0 +1,166 @@
+﻿syntax = "proto3";
+package merlincomm;
+
+service gRPCWukong {
+  rpc ReadTemp (ReadTempRequest) returns (ReadTempReply) {}
+  rpc ReadAll (ReadAllRequest) returns (ReadAllReply) {}
+  rpc ReadConfig (ReadConfigRequest) returns (ReadConfigReply) {}
+  rpc WriteConfig (WriteConfigRequest) returns (WriteConfigReply) {}
+  rpc ReadRealTimeStates (ReadRealTimeStatesRequest) returns (ReadRealTimeStatesReply) {}
+  rpc HeartBeat (HeartBeatRequestWk) returns (HeartBeatReplyWk) {}
+}
+
+/* send ReadTempRequest to wukong */
+
+message ReadTempRequest {
+	string srcName = 1;
+	int64 reqSN = 2;
+}
+
+/* send ReadTempReply to client */
+
+message ReadTempReply {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 state = 3;
+	int32 errCode = 4;
+	repeated float tempCurrent = 5; /* 4 */
+}
+
+/* send ReadAllRequest to wukong */
+
+message ReadAllRequest {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 cmd = 3;
+}
+
+/* send ReadAllReply to client */
+
+message ReadAllReply {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 state = 3;
+	int32 errCode = 4;
+
+	message Temp {
+		repeated float tempTrayAvg = 1;
+		float tempAvg = 2;
+		repeated float tempTrayPer = 3;
+	}
+	Temp temp = 5;
+
+	message ReflectInfrare {
+		repeated float reflectAvg = 1;
+		repeated float reflectPer = 2;
+	}
+	ReflectInfrare reflectInfrare = 6;
+
+	message ReflectVisible {
+		repeated float reflectAvg = 1;
+		repeated float reflectPer = 2;
+	}
+	ReflectVisible reflectVisible = 7;
+
+	message Wrap {
+		repeated float curvAvg = 1; /* 4 */
+		repeated float curvPer = 2; /* 100 */
+	}
+	Wrap wrap = 8;
+
+	message RealTimeOneLoop {
+		repeated float temp = 1;	/* 4*1000 */
+		repeated float reflect = 2;  /* 4*1000 */
+		repeated float curvature = 3;   /* 4*1000 */
+	}
+	RealTimeOneLoop realTimeOneLoop = 9;
+
+	bool splitState = 10;
+	repeated int32 warnings = 11;
+	float rotateSpeed = 12;
+}
+
+/* send ReadConfig to wukong */
+
+message ReadConfigRequest {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 cmd = 3;
+}
+
+/* send ReadConfigReply to client */
+message ReadConfigReply {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 state = 3;
+	int32 errCode = 4;
+	string trayconfig = 5;
+}
+
+
+/* send WriteConfig to wukong */
+
+message WriteConfigRequest {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 cmd = 3;
+	string trayconfig = 4;
+}
+
+/* send WriteConfigReply to client */
+
+message WriteConfigReply {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 state = 3;
+	int32 errCode = 4;
+}
+
+/* send ReadState to wukong */
+
+message ReadRealTimeStatesRequest {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 cmd = 3;
+	float spindle_speed = 4;
+	float tc_temp = 5;
+}
+
+/* send ReadRealTimeStatesReply to client */
+
+message ReadRealTimeStatesReply {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 state = 3;
+	int32 errCode = 4;
+	message RealTimeZone {
+	    repeated float averaged_temperature_on_wafer = 1;   /* 4 */
+        repeated float averaged_temperature_off_wafer = 2;   /* 4 */
+        repeated float averaged_reflection_on_wafer = 3;   /* 4 */
+        repeated float averaged_curvature_on_wafer = 4;    /* 4 */
+	}
+	RealTimeZone realTimeZone = 5;
+	message RealTimeWafer {
+		repeated float temp = 1;	/* 100 */
+		repeated float reflect = 2;  /* 100 */
+		repeated float curvature = 3;   /* 100 */
+	}
+	RealTimeWafer realTimeWafer = 6;
+}
+
+/* send HeartBeatRequest to wukong */
+
+message HeartBeatRequestWk {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int64 timeOutSpan = 3;
+}
+
+/* send HeartBeatReply to client */
+
+message HeartBeatReplyWk {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int64 respSN = 3;
+	int64 timeOutSpan = 4;
+}

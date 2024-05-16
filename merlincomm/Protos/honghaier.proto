@@ -1,0 +1,76 @@
+﻿syntax = "proto3";
+package merlincomm;
+
+service gRPCHonghaier {
+  rpc Read (ReadRequest) returns (ReadReply) {}
+  rpc Write (WriteRequest) returns (WriteReply) {}
+  rpc HeartBeat (HeartBeatRequestHHR) returns (HeartBeatReplyHHR) {}
+}
+
+/* send ReadRequest to honghaier */
+
+message ReadRequest {
+	string srcName = 1;
+	int64 reqSN = 2;
+}
+
+/* send ReadReply to client */
+
+message ReadReply {
+	string srcName = 1;	
+	int64 reqSN = 2;
+	int32 state = 3;
+	int32 errCode = 4;
+	float rotateSpeed = 5;
+	repeated float amps = 6;
+	repeated float voltage = 7;
+	repeated float temperStep = 8;   /* from wukong*/
+	repeated float temperOnWafer = 9;   /* from wukong*/
+	repeated float temperOffWafer = 10;  /* from wukong*/
+	repeated float temperTc = 11;    /* from plc tc*/
+}
+
+/* send WriteRequest to honghaier */
+
+message WriteRequest {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 ctrlVar = 3;    /*1:temp[OnWafer]Target  2:temp[OffWafer]Target 3:temp[Susceptor]Target*/
+	int32 ctrlMode = 4;   /*0:MPC_SPEED  1:MPC_OVERSHOOT */
+	int32 parameter = 5;  /*0:Ramp start from feedback  1:Ramp start from target */
+	double startTime = 6; /*second*/
+	float timeSpan = 7;   /*second*/
+	repeated float tempTarget = 8;
+	repeated float current = 9;          // current feedback from PSU
+	repeated float voltage = 10;         // voltage feedback from PSU
+    repeated float temperOnWafer = 11;   /* from wukong*/
+	repeated float temperOffWafer = 12;  /* from wukong*/
+	repeated float temperTc = 13;        /* from plc tc*/
+}
+
+/* send WriteReply to client */
+
+message WriteReply {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int32 state = 3;
+	int32 errCode = 4;
+	repeated float current = 8;          // current to set for PSU
+}
+
+/* send HeartBeatRequest to honghaier */
+
+message HeartBeatRequestHHR {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int64 timeOutSpan = 3;
+}
+
+/* send HeartBeatReply to client */
+
+message HeartBeatReplyHHR {
+	string srcName = 1;
+	int64 reqSN = 2;
+	int64 respSN = 3;
+	int64 timeOutSpan = 4;
+}
