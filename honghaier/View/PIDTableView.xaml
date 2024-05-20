@@ -42,268 +42,405 @@
         </Grid.RowDefinitions>-->
 
         <TabControl DockPanel.Dock="Top" x:Name="PIDTabControl">
-            <TabItem Header="Zone0" x:Name="PIDTabItem_Zone0" Style="{StaticResource TabItemLineStyle}">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical" Name="Zone0_SP_Index">
-                        <Label Content="Index"/>
-                        <!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>-->
+            <TabItem Header="Zone0" x:Name="Zone0" Style="{StaticResource TabItemLineStyle}">
+                <StackPanel Orientation="Vertical" Name="SP">
+                    <StackPanel Orientation="Horizontal" Name="Zone0_SP_Labels">
+                        <Label Content="Index" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="LowerLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="UpperLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kp" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Ki" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kd" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="MAXOUT" Width="70" HorizontalContentAlignment="Center"/>
                     </StackPanel>
-                    <StackPanel Orientation="Vertical" Name="Zone0_SP_LowerLimit">
-                        <Label Content="LowerLimit"/>
-                        <!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>-->
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Name="Zone0_SP_UpperLimit">
-                        <Label Content="UpperLimit"/>
-                        <!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>-->
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Name="Zone0_SP_Kp">
-                        <Label Content="    Kp    "/>
-                        <!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>-->
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Name="Zone0_SP_Ki">
-                        <Label Content="    Ki    "/>
-                        <!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>-->
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Name="Zone0_SP_Kd">
-                        <Label Content="    Kd    "/>
-                        <!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>-->
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Name="Zone0_SP_MaxOut">
-                        <Label Content="MAXOUT"/>
-                        <!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>-->
-                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Name="Zone0_SP_Labels1">
+                        <TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center" Width="70"/>
+                        <TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center" Width="70"/>
+                        <TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center" Width="70"/>
+                        <TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox x:Name="Ki_TBox" Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox x:Name="Kd_TBox" Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center" Width="70"/>
+                    </StackPanel>-->
                 </StackPanel>
             </TabItem>
 
             <TabItem Header="Zone1" x:Name="PIDTabItem_Zone1" Style="{StaticResource TabItemLineStyle}">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical" Name="Zone1">
+                    <StackPanel Orientation="Horizontal" Name="Zone1_SP_Labels">
+                        <Label Content="Index" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="LowerLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="UpperLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kp" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Ki" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kd" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="MAXOUT" Width="70" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Name="Zone1_SP_Labels1">
+                        <TextBox Text="0" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0000" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0100" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10000" TextAlignment="Center" Width="70"/>
+                    </StackPanel>-->
+                </StackPanel>
+
+                <!--<StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Name="Zone1_SP_Index">
                         <Label Content="Index"/>
-                        <!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone1_SP_LowerLimit">
                         <Label Content="LowerLimit"/>
-                        <!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone1_SP_UpperLimit">
                         <Label Content="UpperLimit"/>
-                        <!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone1_SP_Kp">
                         <Label Content="    Kp    "/>
-                        <!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone1_SP_Ki">
                         <Label Content="    Ki    "/>
-                        <!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone1_SP_Kd">
                         <Label Content="    Kd    "/>
-                        <!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone1_SP_MaxOut">
                         <Label Content="MAXOUT"/>
-                        <!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>--><!--
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </TabItem>
 
             <TabItem Header="Zone2" x:Name="PIDTabItem_Zone2" Style="{StaticResource TabItemLineStyle}">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical" Name="PIDTab_Zone2_SP">
+                    <StackPanel Orientation="Horizontal" Name="Zone2_SP_Labels0">
+                        <Label Content="Index" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="LowerLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="UpperLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kp" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Ki" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kd" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="MAXOUT" Width="70" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Name="Zone2_SP_Labels1">
+                        <TextBox Text="0" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0000" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0100" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10000" TextAlignment="Center" Width="70"/>
+                    </StackPanel>-->
+                </StackPanel>
+
+                <!--<StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Name="Zone2_SP_Index">
                         <Label Content="Index"/>
-                        <!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone2_SP_LowerLimit">
                         <Label Content="LowerLimit"/>
-                        <!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone2_SP_UpperLimit">
                         <Label Content="UpperLimit"/>
-                        <!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone2_SP_Kp">
                         <Label Content="    Kp    "/>
-                        <!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone2_SP_Ki">
                         <Label Content="    Ki    "/>
-                        <!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone2_SP_Kd">
                         <Label Content="    Kd    "/>
-                        <!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone2_SP_MaxOut">
                         <Label Content="MAXOUT"/>
-                        <!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>--><!--
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </TabItem>
 
             <TabItem Header="Zone3" x:Name="PIDTabItem_Zone3" Style="{StaticResource TabItemLineStyle}">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical" Name="PIDTab_Zone3_SP">
+                    <StackPanel Orientation="Horizontal" Name="Zone3_SP_Labels0">
+                        <Label Content="Index" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="LowerLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="UpperLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kp" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Ki" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kd" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="MAXOUT" Width="70" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Name="Zone3_SP_Labels1">
+                        <TextBox Text="0" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0000" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0100" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10000" TextAlignment="Center" Width="70"/>
+                    </StackPanel>-->
+                </StackPanel>
+                
+                <!--<StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Name="Zone3_SP_Index">
                         <Label Content="Index"/>
-                        <!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone3_SP_LowerLimit">
                         <Label Content="LowerLimit"/>
-                        <!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone3_SP_UpperLimit">
                         <Label Content="UpperLimit"/>
-                        <!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone3_SP_Kp">
                         <Label Content="    Kp    "/>
-                        <!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone3_SP_Ki">
                         <Label Content="    Ki    "/>
-                        <!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone3_SP_Kd">
                         <Label Content="    Kd    "/>
-                        <!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone3_SP_MaxOut">
                         <Label Content="MAXOUT"/>
-                        <!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>--><!--
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </TabItem>
 
             <TabItem Header="Zone4" x:Name="PIDTabItem_Zone4" Style="{StaticResource TabItemLineStyle}" Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical" Name="PIDTab_Zone4_SP">
+                    <StackPanel Orientation="Horizontal" Name="Zone4_SP_Labels0">
+                        <Label Content="Index" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="LowerLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="UpperLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kp" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Ki" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kd" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="MAXOUT" Width="70" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Name="Zone4_SP_Labels1">
+                        <TextBox Text="0" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0000" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0100" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10000" TextAlignment="Center" Width="70"/>
+                    </StackPanel>-->
+                </StackPanel>
+                
+                <!--<StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Name="Zone4_SP_Index">
                         <Label Content="Index"/>
-                        <!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone4_SP_LowerLimit">
                         <Label Content="LowerLimit"/>
-                        <!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone4_SP_UpperLimit">
                         <Label Content="UpperLimit"/>
-                        <!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone4_SP_Kp">
                         <Label Content="    Kp    "/>
-                        <!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone4_SP_Ki">
                         <Label Content="    Ki    "/>
-                        <!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone4_SP_Kd">
                         <Label Content="    Kd    "/>
-                        <!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone4_SP_MaxOut">
                         <Label Content="MAXOUT"/>
-                        <!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>--><!--
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </TabItem>
 
             <TabItem Header="Zone5" x:Name="PIDTabItem_Zone5" Style="{StaticResource TabItemLineStyle}" Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical" Name="PIDTab_Zone5_SP">
+                    <StackPanel Orientation="Horizontal" Name="Zone5_SP_Labels0">
+                        <Label Content="Index" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="LowerLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="UpperLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kp" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Ki" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kd" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="MAXOUT" Width="70" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Name="Zone5_SP_Labels1">
+                        <TextBox Text="0" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0000" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0100" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10000" TextAlignment="Center" Width="70"/>
+                    </StackPanel>-->
+                </StackPanel>
+                
+                <!--<StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Name="Zone5_SP_Index">
                         <Label Content="Index"/>
-                        <!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone5_SP_LowerLimit">
                         <Label Content="LowerLimit"/>
-                        <!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone5_SP_UpperLimit">
                         <Label Content="UpperLimit"/>
-                        <!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone5_SP_Kp">
                         <Label Content="    Kp    "/>
-                        <!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone5_SP_Ki">
                         <Label Content="    Ki    "/>
-                        <!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone5_SP_Kd">
                         <Label Content="    Kd    "/>
-                        <!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone5_SP_MaxOut">
                         <Label Content="MAXOUT"/>
-                        <!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>--><!--
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </TabItem>
 
             <TabItem Header="Zone6" x:Name="PIDTabItem_Zone6" Style="{StaticResource TabItemLineStyle}" Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical" Name="PIDTab_Zone6_SP">
+                    <StackPanel Orientation="Horizontal" Name="Zone6_SP_Labels0">
+                        <Label Content="Index" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="LowerLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="UpperLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kp" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Ki" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kd" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="MAXOUT" Width="70" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Name="Zone6_SP_Labels1">
+                        <TextBox Text="0" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0000" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0100" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10000" TextAlignment="Center" Width="70"/>
+                    </StackPanel>-->
+                </StackPanel>
+
+                <!--<StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Name="Zone6_SP_Index">
                         <Label Content="Index"/>
-                        <!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone6_SP_LowerLimit">
                         <Label Content="LowerLimit"/>
-                        <!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone6_SP_UpperLimit">
                         <Label Content="UpperLimit"/>
-                        <!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone6_SP_Kp">
                         <Label Content="    Kp    "/>
-                        <!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone6_SP_Ki">
                         <Label Content="    Ki    "/>
-                        <!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone6_SP_Kd">
                         <Label Content="    Kd    "/>
-                        <!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone6_SP_MaxOut">
                         <Label Content="MAXOUT"/>
-                        <!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>--><!--
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </TabItem>
 
             <TabItem Header="Zone7" x:Name="PIDTabItem_Zone7" Style="{StaticResource TabItemLineStyle}" Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical" Name="PIDTab_Zone7_SP">
+                    <StackPanel Orientation="Horizontal" Name="Zone7_SP_Labels0">
+                        <Label Content="Index" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="LowerLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="UpperLimit" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kp" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Ki" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="Kd" Width="70" HorizontalContentAlignment="Center"/>
+                        <Label Content="MAXOUT" Width="70" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Name="Zone7_SP_Labels1">
+                        <TextBox Text="0" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0000" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="0100" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10.4531" TextAlignment="Center" Width="70"/>
+                        <TextBox Text="10000" TextAlignment="Center" Width="70"/>
+                    </StackPanel>-->
+                </StackPanel>
+                
+                <!--<StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Name="Zone7_SP_Index">
                         <Label Content="Index"/>
-                        <!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Index_TBox" Text="0" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone7_SP_LowerLimit">
                         <Label Content="LowerLimit"/>
-                        <!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="LowerLimit_TBox" Text="0000" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone7_SP_UpperLimit">
                         <Label Content="UpperLimit"/>
-                        <!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="UpperLimit_TBox" Text="0100" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone7_SP_Kp">
                         <Label Content="    Kp    "/>
-                        <!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kp_TBox" Text="10.4531" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone7_SP_Ki">
                         <Label Content="    Ki    "/>
-                        <!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Ki_TBox" Text="0.095" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone7_SP_Kd">
                         <Label Content="    Kd    "/>
-                        <!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="Kd_TBox" Text="89" TextAlignment="Center"/>--><!--
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Name="Zone7_SP_MaxOut">
                         <Label Content="MAXOUT"/>
-                        <!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>-->
+                        --><!--<TextBox x:Name="MAXOUT_TBox" Text="10000" TextAlignment="Center"/>--><!--
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </TabItem>
         </TabControl>
 
