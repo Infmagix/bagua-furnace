@@ -83,7 +83,7 @@ namespace honghaier
         {
             try
             {
-                PIDTableExpander.Content = new PIDTableView();
+                //PIDTableExpander.Content = new PIDTableView();
                 /*.Content = new PIDTableView();*/
             }
             catch (Exception exception)

@@ -1,8 +1,11 @@
 ﻿using honghaier.Utility;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace honghaier.View
 {
@@ -139,39 +142,97 @@ namespace honghaier.View
                 Width = 70,
                 Name = name,
             };
-            tb.TextChanged += (sender, e) => { 
-                var tBox = sender as TextBox;
-                if (!string.IsNullOrEmpty(tBox.Text))
+
+            tb.GotFocus += (s, e) =>
+            {
+                // 当 TextBox 获得焦点时, 改变背景色
+                tb.Background = Brushes.LightBlue;
+            };
+
+            tb.LostFocus += (s, e) =>
+            {
+                // 当 TextBox 获得焦点时, 改变背景色
+                tb.Background = Brushes.Gray;
+            };
+
+            tb.KeyUp += (s, e) =>
+            {
+                if (e.Key == Key.Enter)
                 {
-                    var strs = tBox.Name.Split('_');
-                    int idx = int.Parse(strs[1]);
-                    var ref2PIDParam = zoneID2PidParamList[strs[0]][idx];
+                    OnTextChanged(s, e);
 
-                    if ("Index" == strs[2])
-                        ref2PIDParam.Index = int.Parse(tBox.Text);
-                    else if ("LowerLimit" == strs[2])
-                        ref2PIDParam.LowerLimit = double.Parse(tBox.Text);
-                    else if ("UpperLimit" == strs[2])
-                        ref2PIDParam.UpperLimit = double.Parse(tBox.Text);
-                    else if ("Kp" == strs[2])
-                        ref2PIDParam.Kp = double.Parse(tBox.Text);
-                    else if ("Ki" == strs[2])
-                        ref2PIDParam.Ki = double.Parse(tBox.Text);
-                    else if ("Kd" == strs[2])
-                        ref2PIDParam.Kd = double.Parse(tBox.Text);
-                    else if ("MaxOut" == strs[2])
-                        ref2PIDParam.MaxOut = double.Parse(tBox.Text);
-                    else
-                    {
-                        // error
-                    }
-
-                    LogHelper.Debug(strs[0] + " changed:", log);
-                    LogHelper.Debug(ref2PIDParam.ToString(), log);
+                    tb.Background = Brushes.White;
+                    //tb.MoveFocus();
                 }
             };
+
+            //tb.TextChanged += (sender, e) => { 
+            //    var tBox = sender as TextBox;
+            //    if (!string.IsNullOrEmpty(tBox.Text))
+            //    {
+            //        var strs = tBox.Name.Split('_');
+            //        int idx = int.Parse(strs[1]);
+            //        var ref2PIDParam = zoneID2PidParamList[strs[0]][idx];
+
+            //        if ("Index" == strs[2])
+            //            ref2PIDParam.Index = int.Parse(tBox.Text);
+            //        else if ("LowerLimit" == strs[2])
+            //            ref2PIDParam.LowerLimit = double.Parse(tBox.Text);
+            //        else if ("UpperLimit" == strs[2])
+            //            ref2PIDParam.UpperLimit = double.Parse(tBox.Text);
+            //        else if ("Kp" == strs[2])
+            //            ref2PIDParam.Kp = double.Parse(tBox.Text);
+            //        else if ("Ki" == strs[2])
+            //            ref2PIDParam.Ki = double.Parse(tBox.Text);
+            //        else if ("Kd" == strs[2])
+            //            ref2PIDParam.Kd = double.Parse(tBox.Text);
+            //        else if ("MaxOut" == strs[2])
+            //            ref2PIDParam.MaxOut = double.Parse(tBox.Text);
+            //        else
+            //        {
+            //            // error
+            //        }
+
+            //        LogHelper.Debug(strs[0] + " changed:", log);
+            //        LogHelper.Debug(ref2PIDParam.ToString(), log);
+            //    }
+            //};
             return tb;
         }
+
+        private void OnTextChanged(object sender, KeyEventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (!string.IsNullOrEmpty(tb.Name))
+            {
+                var strs = tb.Name.Split('_');
+                int idx = int.Parse(strs[1]);
+                var ref2PIDParam = zoneID2PidParamList[strs[0]][idx];
+
+                if ("Index" == strs[2])
+                    ref2PIDParam.Index = int.Parse(tb.Text);
+                else if ("LowerLimit" == strs[2])
+                    ref2PIDParam.LowerLimit = double.Parse(tb.Text);
+                else if ("UpperLimit" == strs[2])
+                    ref2PIDParam.UpperLimit = double.Parse(tb.Text);
+                else if ("Kp" == strs[2])
+                    ref2PIDParam.Kp = double.Parse(tb.Text);
+                else if ("Ki" == strs[2])
+                    ref2PIDParam.Ki = double.Parse(tb.Text);
+                else if ("Kd" == strs[2])
+                    ref2PIDParam.Kd = double.Parse(tb.Text);
+                else if ("MaxOut" == strs[2])
+                    ref2PIDParam.MaxOut = double.Parse(tb.Text);
+                else
+                {
+                    // error
+                }
+
+                LogHelper.Debug(strs[0] + " changed:", log);
+                LogHelper.Debug(ref2PIDParam.ToString(), log);
+            }
+        }
+    
 
 
 

@@ -36,10 +36,7 @@
         </Style>
     </UserControl.Resources>
     
-    <Grid Name="PIDTableGrid">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>-->
+
 
         <TabControl DockPanel.Dock="Top" x:Name="PIDTabControl">
             <TabItem Header="Zone0" x:Name="Zone0" Style="{StaticResource TabItemLineStyle}">
@@ -451,5 +448,5 @@
                 </TabControl>
             </Expander>
         </ScrollViewer>-->
-    </Grid>
+
 </UserControl>
