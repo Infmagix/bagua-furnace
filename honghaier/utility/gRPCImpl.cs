@@ -62,22 +62,31 @@ namespace honghaier.Utility
             }
         }
 
-        //[DllImport(@"MBTC.dll", EntryPoint = "MBTC_reload_config", CallingConvention = CallingConvention.Cdecl)]
-        //public static extern int MBTC_reload_config(string configFile);
+        [DllImport(@"MBTC.dll", EntryPoint = "MBTC_reload_config", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int MBTC_reload_config(IntPtr inData, int zoneIndex, int pidIndex);
 
-        //public void MBTCReload()
-        //{
-        //    //PIDClear();
-        //    try
-        //    {
-        //        string configFileFullName = @".\Config\SimplePIDConfig.xml";
-        //        MBTC_load_config(configFileFullName);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MessageBox.Show(e.Message);
-        //    }
-        //}
+        private object lockObj = new object();
+
+        public void MBTCReload(PID_PARAM_STRUCT inData, int zoneIndex, int pidIndex)
+        {
+            try
+            {
+                //string configFileFullName = @".\Config\SimplePIDConfig.xml";
+                //MBTC_load_config(configFileFullName);
+
+                IntPtr inputBuffer = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(PID_PARAM_STRUCT)));
+                Marshal.StructureToPtr(inData, inputBuffer, false);
+
+                lock (lockObj)
+                {
+                    MBTC_reload_config(inputBuffer, zoneIndex, pidIndex);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
 
         public override Task<ReadReply> Read(ReadRequest request, ServerCallContext context)
         {
@@ -336,9 +345,14 @@ namespace honghaier.Utility
             IntPtr _inputBuffer = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(MBTC_INPUT_STRUCT)));
             IntPtr _outputBuffer = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(MBTC_OUTPUT_STRUCT)));
             Marshal.StructureToPtr(inDat, _inputBuffer, false);
-            MBTC_simple_run(_inputBuffer, _outputBuffer);
-            //MPC_run(_inputBuffer, _outputBuffer);
-            inDat = (MBTC_INPUT_STRUCT)Marshal.PtrToStructure(
+
+            lock (lockObj)
+            {
+                MBTC_simple_run(_inputBuffer, _outputBuffer);
+            }
+
+        //MPC_run(_inputBuffer, _outputBuffer);
+        inDat = (MBTC_INPUT_STRUCT)Marshal.PtrToStructure(
                 _inputBuffer, typeof(MBTC_INPUT_STRUCT));
             MBTC_OUTPUT_STRUCT outDat = (MBTC_OUTPUT_STRUCT)Marshal.PtrToStructure(
                 _outputBuffer, typeof(MBTC_OUTPUT_STRUCT));

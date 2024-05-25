@@ -24,6 +24,7 @@ using System.Runtime.InteropServices;
 using honghaier.Model;
 using honghaier.ViewModel;
 using honghaier.View;
+using SciChart.Core.Extensions;
 
 namespace honghaier
 {
@@ -333,6 +334,29 @@ namespace honghaier
             try
             {
                 //if (init) Singleton<gRPCImpl>.Instance.MBTCInitialize();
+                if (init && !PIDTableView.IndexPairList.IsEmpty())
+                {
+                    for (int i = 0; i < PIDTableView.IndexPairList.Count; i++)
+                    {
+                        var zoneID = PIDTableView.IndexPairList[i].zoneID;
+                        var pidID = PIDTableView.IndexPairList[i].pidID;
+                        var temp = PIDTableView.GetPIDParam(zoneID, pidID);
+
+                        var pidParamStruct = new PID_PARAM_STRUCT();
+                        pidParamStruct.index = temp.Index;
+                        pidParamStruct.lowerLimit = temp.LowerLimit;
+                        pidParamStruct.upperLimit = temp.UpperLimit;
+                        pidParamStruct.kp = temp.Kp;
+                        pidParamStruct.ki = temp.Ki;
+                        pidParamStruct.kd = temp.Kd;
+                        pidParamStruct.maxOut = temp.MaxOut;
+
+                        Singleton<gRPCImpl>.Instance.MBTCReload(pidParamStruct, zoneID, pidID);
+                    }
+
+                    PIDTableView.IndexPairList.Clear();
+                }
+                Reload.IsEnabled = false;
             }
             catch (Exception ex)
             {

@@ -19,8 +19,15 @@ namespace honghaier.View
         private int nPIDs = 4; // 各区域的温度段数
         private Dictionary<string, List<PID_Parameter>> zoneID2PidParamList;
 
+        public PID_Parameter GetPIDParam(int zoneIndex, int pidIndex)
+        { return zoneID2PidParamList[$"Zone{zoneIndex}"][pidIndex]; }
+
         private log4net.ILog log = log4net.LogManager.GetLogger("PIDTableView");
 
+        private List<Index_Pair> indexPairList = new List<Index_Pair>();
+        private HashSet<String> indexPairSet = new HashSet<string>();
+
+        public List<Index_Pair> IndexPairList { get => indexPairList; set => indexPairList = value; }
 
         public PIDTableView()
         {
@@ -151,52 +158,202 @@ namespace honghaier.View
 
             tb.LostFocus += (s, e) =>
             {
-                // 当 TextBox 获得焦点时, 改变背景色
-                tb.Background = Brushes.Gray;
+#if false
+                if (!string.IsNullOrEmpty(tb.Name))
+                {
+                    var strs = tb.Name.Split('_');
+                    var zoneID = int.Parse(strs[0].Substring(4));
+                    int pidID = int.Parse(strs[1]);
+                    var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
+
+                    var curTextVal = double.Parse(tb.Text);
+                    if ("Index" == strs[2] && ref2PIDParam.Index != (int)curTextVal)
+                    {
+                        ref2PIDParam.Index = (int)curTextVal;
+                    }
+                    else if ("LowerLimit" == strs[2] && ref2PIDParam.LowerLimit != curTextVal)
+                    {
+                        ref2PIDParam.LowerLimit = curTextVal;
+                    }
+                    else if ("UpperLimit" == strs[2] && ref2PIDParam.UpperLimit != curTextVal)
+                    {
+                        ref2PIDParam.UpperLimit = curTextVal;
+                    }
+                    else if ("Kp" == strs[2] && ref2PIDParam.Kp != curTextVal)
+                    {
+                        ref2PIDParam.Kp = curTextVal;
+                    }
+                    else if ("Ki" == strs[2] && ref2PIDParam.Ki != curTextVal)
+                    {
+                        ref2PIDParam.Ki = curTextVal;
+                    }
+                    else if ("Kd" == strs[2] && ref2PIDParam.Kd != curTextVal)
+                    {
+                        ref2PIDParam.Kd = curTextVal;
+                    }
+                    else if ("MaxOut" == strs[2] && ref2PIDParam.MaxOut != curTextVal)
+                    {
+                        ref2PIDParam.MaxOut = curTextVal;
+                    }
+                    else
+                    {
+                        // error
+                    }
+
+
+                    if (!indexPairSet.Contains(tb.Name))
+                    {
+                        indexPairSet.Add(tb.Name);
+                        indexPairList.Add(new Index_Pair(zoneID, pidID));
+                    }
+                }
+#endif
+
+                // 当 TextBox 失去焦点时, 改变背景色
+                tb.Background = Brushes.White;
             };
 
             tb.KeyUp += (s, e) =>
             {
                 if (e.Key == Key.Enter)
                 {
-                    OnTextChanged(s, e);
+                    //OnTextChanged(s, e);
 
                     tb.Background = Brushes.White;
-                    //tb.MoveFocus();
+                    tb.MoveFocus(new TraversalRequest(FocusNavigationDirection.Down));
                 }
             };
 
-            //tb.TextChanged += (sender, e) => { 
-            //    var tBox = sender as TextBox;
-            //    if (!string.IsNullOrEmpty(tBox.Text))
-            //    {
-            //        var strs = tBox.Name.Split('_');
-            //        int idx = int.Parse(strs[1]);
-            //        var ref2PIDParam = zoneID2PidParamList[strs[0]][idx];
+            tb.TextChanged += (_, e) =>
+            {
+#if false
+                if (!string.IsNullOrEmpty(tb.Name))
+                {
+                    var strs = tb.Name.Split('_');
+                    var zoneID = int.Parse(strs[0].Substring(4));
+                    var pidID = int.Parse(strs[1]);
+                    var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
 
-            //        if ("Index" == strs[2])
-            //            ref2PIDParam.Index = int.Parse(tBox.Text);
-            //        else if ("LowerLimit" == strs[2])
-            //            ref2PIDParam.LowerLimit = double.Parse(tBox.Text);
-            //        else if ("UpperLimit" == strs[2])
-            //            ref2PIDParam.UpperLimit = double.Parse(tBox.Text);
-            //        else if ("Kp" == strs[2])
-            //            ref2PIDParam.Kp = double.Parse(tBox.Text);
-            //        else if ("Ki" == strs[2])
-            //            ref2PIDParam.Ki = double.Parse(tBox.Text);
-            //        else if ("Kd" == strs[2])
-            //            ref2PIDParam.Kd = double.Parse(tBox.Text);
-            //        else if ("MaxOut" == strs[2])
-            //            ref2PIDParam.MaxOut = double.Parse(tBox.Text);
-            //        else
-            //        {
-            //            // error
-            //        }
+                    var curTextVal = double.Parse(tb.Text);
+                    switch (strs[2])
+                    {
+                        case "Index":
 
-            //        LogHelper.Debug(strs[0] + " changed:", log);
-            //        LogHelper.Debug(ref2PIDParam.ToString(), log);
-            //    }
-            //};
+                            break;
+                        default: break; // error
+                    }
+                    if ("Index" == strs[2] && ref2PIDParam.Index != (int)curTextVal)
+                    {
+                        ref2PIDParam.Index = (int)curTextVal;
+                    }
+                    else if ("LowerLimit" == strs[2] && ref2PIDParam.LowerLimit != curTextVal)
+                    {
+                        ref2PIDParam.LowerLimit = curTextVal;
+                    }
+                    else if ("UpperLimit" == strs[2] && ref2PIDParam.UpperLimit != curTextVal)
+                    {
+                        ref2PIDParam.UpperLimit = curTextVal;
+                    }
+                    else if ("Kp" == strs[2] && ref2PIDParam.Kp != curTextVal)
+                    {
+                        ref2PIDParam.Kp = curTextVal;
+                    }
+                    else if ("Ki" == strs[2] && ref2PIDParam.Ki != curTextVal)
+                    {
+                        ref2PIDParam.Ki = curTextVal;
+                    }
+                    else if ("Kd" == strs[2] && ref2PIDParam.Kd != curTextVal)
+                    {
+                        ref2PIDParam.Kd = curTextVal;
+                    }
+                    else if ("MaxOut" == strs[2] && ref2PIDParam.MaxOut != curTextVal)
+                    {
+                        ref2PIDParam.MaxOut = curTextVal;
+                    }
+                    else
+                    {
+                        // error
+                    }
+
+
+                    if (!indexPairSet.Contains(tb.Name))
+                    {
+                        indexPairSet.Add(tb.Name);
+                        indexPairList.Add(new Index_Pair(zoneID, pidID));
+                    }
+                }
+#endif
+
+                if (!string.IsNullOrEmpty(tb.Name))
+                {
+                    var strs = tb.Name.Split('_');
+                    var zoneID = int.Parse(strs[0].Substring(4));
+                    var pidID = int.Parse(strs[1]);
+                    var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
+
+                    var curTextVal = double.Parse(tb.Text);
+                    switch (strs[2])
+                    {
+                        case "Index":
+                            ref2PIDParam.Index = (int)curTextVal; break;
+                        case "LowerLimit":
+                            ref2PIDParam.LowerLimit = curTextVal; break;
+                        case "UpperLimit":
+                            ref2PIDParam.UpperLimit = curTextVal; break;
+                        case "Kp":
+                            ref2PIDParam.Kp = curTextVal; break;
+                        case "Ki":
+                            ref2PIDParam.Ki = curTextVal; break;
+                        case "Kd":
+                            ref2PIDParam.Kd = curTextVal; break;
+                        case "MaxOut":
+                            ref2PIDParam.MaxOut = curTextVal; break;
+                        default: break; // error
+                    }
+                    
+                    if (!indexPairSet.Contains(tb.Name))
+                    {
+                        indexPairSet.Add(tb.Name);
+                        indexPairList.Add(new Index_Pair(zoneID, pidID));
+                    }
+                }
+            };
+
+#if false
+            tb.TextChanged += (sender, e) =>
+            {
+                var tBox = sender as TextBox;
+                if (!string.IsNullOrEmpty(tBox.Text))
+                {
+                    var strs = tBox.Name.Split('_');
+                    var zoneID = int.Parse(strs[0].Substring(4));
+                    var pidID = int.Parse(strs[1]);
+                    var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
+
+                    if ("Index" == strs[2])
+                        ref2PIDParam.Index = int.Parse(tBox.Text);
+                    else if ("LowerLimit" == strs[2])
+                        ref2PIDParam.LowerLimit = double.Parse(tBox.Text);
+                    else if ("UpperLimit" == strs[2])
+                        ref2PIDParam.UpperLimit = double.Parse(tBox.Text);
+                    else if ("Kp" == strs[2])
+                        ref2PIDParam.Kp = double.Parse(tBox.Text);
+                    else if ("Ki" == strs[2])
+                        ref2PIDParam.Ki = double.Parse(tBox.Text);
+                    else if ("Kd" == strs[2])
+                        ref2PIDParam.Kd = double.Parse(tBox.Text);
+                    else if ("MaxOut" == strs[2])
+                        ref2PIDParam.MaxOut = double.Parse(tBox.Text);
+                    else
+                    {
+                        // error
+                    }
+                    //LogHelper.Debug(strs[0] + " changed:", log);
+                    //LogHelper.Debug(ref2PIDParam.ToString(), log);
+                    indexPairList.Add(new Index_Pair(zoneID, pidID));
+                }
+            };
+#endif
             return tb;
         }
 
@@ -206,8 +363,9 @@ namespace honghaier.View
             if (!string.IsNullOrEmpty(tb.Name))
             {
                 var strs = tb.Name.Split('_');
-                int idx = int.Parse(strs[1]);
-                var ref2PIDParam = zoneID2PidParamList[strs[0]][idx];
+                var zoneID = int.Parse(strs[0].Substring(4));
+                int pidID = int.Parse(strs[1]);
+                var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
 
                 if ("Index" == strs[2])
                     ref2PIDParam.Index = int.Parse(tb.Text);
@@ -230,6 +388,8 @@ namespace honghaier.View
 
                 LogHelper.Debug(strs[0] + " changed:", log);
                 LogHelper.Debug(ref2PIDParam.ToString(), log);
+
+                indexPairList.Add(new Index_Pair(zoneID, pidID));
             }
         }
     
@@ -278,7 +438,7 @@ namespace honghaier.View
         }
     }
 
-    internal class PID_Parameter
+    public class PID_Parameter
     {
         private int index;
         private double lowerLimit;
@@ -321,6 +481,18 @@ namespace honghaier.View
         override public string ToString()
         {
             return $"Index={Index} LL={LowerLimit} UL={UpperLimit} Kp={Kp} Ki={Ki} Kd={Kd} MaxOut={MaxOut}";
+        }
+    }
+
+    public struct Index_Pair
+    {
+        public int zoneID;
+        public int pidID;
+
+        public Index_Pair(int zoneID = -1, int pidID = -1)
+        {
+            this.zoneID = zoneID;
+            this.pidID = pidID;
         }
     }
 }
