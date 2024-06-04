@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using honghaier.Model;
+using honghaier.ViewModel;
 using Merlincomm;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ namespace honghaier.Utility
         IDbProvider _dbProvider;
 
         //private TcAdsClient adsClient = new TcAdsClient();
+
+        //private RealTimeDataViewModel rtvm;
+        //public List<List<float>> channelPlotQueueListUI = new List<List<float>>();
+
         public gRPCImpl()
         {
             //adsClient.Connect(ConfigurationManager.AppSettings["PLCNetID"],
@@ -42,6 +47,35 @@ namespace honghaier.Utility
             else if (Const.InfluxDBEnable)
             {
                 //_dbProvider = Singleton<InfluxDBHelper>.Instance;
+            }
+        }
+
+        //public void BindRealData(RealTimeDataViewModel rtvm)
+        //{
+        //    this.rtvm = rtvm;
+        //}
+
+        private TestViewModel testVM;
+        public void BindTestViewModel(TestViewModel testVM)
+        {
+            this.testVM = testVM;
+        }
+
+        public void UpdateTestVM(List<float> powerVals)
+        {
+            try
+            {
+                //var testDM = new TestDataModel();
+                //for (int i = 0; i < powerVals.Count && i < testDM.DataPlotQueueList.Count; i++)
+                //{
+                //    testDM.DataPlotQueueList[i].Add(powerVals[i]);
+                //}
+                //assert(powerVals.Count <= testVM.DataPlotQueueList.Count);
+                testVM?.UpdateData(powerVals);
+            }
+            catch (Exception e)
+            {
+
             }
         }
 
@@ -133,6 +167,55 @@ namespace honghaier.Utility
                 {
                     writeReply.Current.AddRange(_writeStruct.curAmps);
                 }
+
+                //if (_readStruct != null)
+                //{
+                    // current amps: 0 - 3
+                    //channelPlotQueueListUI[0].Add(_readStruct.curAmps[0] * _readStruct.curVoltage[0]);
+                    //channelPlotQueueListUI[1].Add(_readStruct.curAmps[1] * _readStruct.curVoltage[1]);
+                    //channelPlotQueueListUI[2].Add(_readStruct.curAmps[2] * _readStruct.curVoltage[2]);
+                    //channelPlotQueueListUI[3].Add(_readStruct.curAmps[3] * _readStruct.curVoltage[3]);
+
+                    //rtvm.UpdateData(channelPlotQueueListUI);
+#if false
+                    // current amps: 0 - 3
+                    channelPlotQueueListUI[0].Add(_readStruct.curAmps[0]);
+                    channelPlotQueueListUI[1].Add(_readStruct.curAmps[1]);
+                    channelPlotQueueListUI[2].Add(_readStruct.curAmps[2]);
+                    channelPlotQueueListUI[3].Add(_readStruct.curAmps[3]);
+
+                    // current volts: 4 - 7
+                    channelPlotQueueListUI[4].Add(_readStruct.curVoltage[0]);
+                    channelPlotQueueListUI[5].Add(_readStruct.curVoltage[1]);
+                    channelPlotQueueListUI[6].Add(_readStruct.curVoltage[2]);
+                    channelPlotQueueListUI[7].Add(_readStruct.curVoltage[3]);
+
+                    // current Temperature setpointed: 8 - 11
+                    channelPlotQueueListUI[8].Add(_readStruct.curTempStep[0]);
+                    channelPlotQueueListUI[9].Add(_readStruct.curTempStep[1]);
+                    channelPlotQueueListUI[10].Add(_readStruct.curTempStep[2]);
+                    channelPlotQueueListUI[11].Add(_readStruct.curTempStep[3]);
+
+                    // current temperature on wafer: 12 - 15
+                    channelPlotQueueListUI[12].Add(_readStruct.curWaferOnTemper[0]);
+                    channelPlotQueueListUI[13].Add(_readStruct.curWaferOnTemper[1]);
+                    channelPlotQueueListUI[14].Add(_readStruct.curWaferOnTemper[2]);
+                    channelPlotQueueListUI[15].Add(_readStruct.curWaferOnTemper[3]);
+
+                    // current temperature off wafer: 12 - 15
+                    channelPlotQueueListUI[16].Add(_readStruct.curWaferOffTemper[0]);
+                    channelPlotQueueListUI[17].Add(_readStruct.curWaferOffTemper[1]);
+                    channelPlotQueueListUI[18].Add(_readStruct.curWaferOffTemper[2]);
+                    channelPlotQueueListUI[19].Add(_readStruct.curWaferOffTemper[3]);
+
+                    // current Tc temper: 16 - 19
+                    channelPlotQueueListUI[20].Add(_readStruct.curTCTemper[0]);
+                    channelPlotQueueListUI[21].Add(_readStruct.curTCTemper[1]);
+                    channelPlotQueueListUI[22].Add(_readStruct.curTCTemper[2]);
+                    channelPlotQueueListUI[23].Add(_readStruct.curTCTemper[3]);
+#endif
+                //}
+
             }
             catch (Exception ex)
             {
@@ -265,6 +348,15 @@ namespace honghaier.Utility
                 var dict = TransOutputParas(outDat);
                 _dbProvider?.WriteDict(dict);
             }
+
+            var powerVals = new List<float>()
+            {
+                (float)outDat.zone_power_feedback.zone_1,
+                (float)outDat.zone_power_feedback.zone_2,
+                (float)outDat.zone_power_feedback.zone_3,
+                (float)outDat.zone_power_feedback.zone_4,
+            };
+            UpdateTestVM(powerVals);
         }
 
         private void PyroTempDiffLog()

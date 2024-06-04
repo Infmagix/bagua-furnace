@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
 using honghaier.Model;
 using honghaier.Utility;
 using honghaier.View;
@@ -15,19 +12,25 @@ namespace honghaier.ViewModel
 {
     public class RealTimeDataViewModel
     {
-        public RealTimeDataModel realTimeDataModel { get; set; }
+        public RealTimeDataModel RealTimeDataModel { get; set; }
         public DelegateCommand ShowCommand { get; set; }
-        private RealTimeDataView realTimeDataView { get; set; }
-        public RealTimeDataViewModel(RealTimeDataView realTimeDataView)
+        private List<UserControl> dataViewList = new List<UserControl>();
+
+        public RealTimeDataViewModel()
         {
-            this.realTimeDataView = realTimeDataView;
+            RealTimeDataModel = new RealTimeDataModel();
+        }
+
+        public void RegisterViews(UserControl view)
+        {
+            dataViewList.Add(view);
+            view.DataContext = RealTimeDataModel;
+            RealTimeDataModel.PropertyChanged += ((INotifyClass)view).PropertyChanged;
         }
 
         public void UpdateData(List<List<float>> channelPlotQueueList)
         {
-            realTimeDataModel = new RealTimeDataModel();
-            realTimeDataModel.PropertyChanged += realTimeDataView.PropertyChanged;
-            realTimeDataModel.channelPlotQueueList = channelPlotQueueList;
+            RealTimeDataModel.ChannelPlotQueueList = channelPlotQueueList;
         }
     }
 }

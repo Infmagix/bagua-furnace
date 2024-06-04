@@ -193,8 +193,11 @@
         
         <Grid Grid.Column="1">
             <TabControl Style="{StaticResource TabControlStyle}" DockPanel.Dock="Top" x:Name="tabControl">
-                <TabItem Header="实时数据" Style="{StaticResource TabItemLineStyle}"/>
-                
+                <TabItem Header="实时数据" Style="{StaticResource TabItemLineStyle}">
+                    <!--<honghaier.View:RealTimeDataView x:Name="RealTimeView"/>-->
+                    <honghaier.View:TestView x:Name="MyTestView"/>
+                </TabItem>
+
                 <TabItem Header="参数表单" Style="{StaticResource TabItemLineStyle}">
                     <StackPanel Orientation="Vertical">
                         <GroupBox Name="PIDTableExpander" Header="PID Table">

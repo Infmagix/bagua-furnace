@@ -98,30 +98,30 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
             <Grid Grid.Row="0" Grid.Column="0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
+                    <!--<RowDefinition Height="*" />-->
+                    <!--<RowDefinition Height="*" />-->
+                    <!--<RowDefinition Height="*" />-->
                 </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>-->
                 
                 <!--  Define a SciChartSurface with RolloverModifier  -->
                 <local:CustomTable x:Name="sciChartSurface0" Grid.Row="0" Grid.Column="0"></local:CustomTable>
-                <local:CustomTable x:Name="sciChartSurface1" Grid.Row="1" Grid.Column="0"></local:CustomTable>
+                <!--<local:CustomTable x:Name="sciChartSurface1" Grid.Row="1" Grid.Column="0"></local:CustomTable>
                 <local:CustomTable x:Name="sciChartSurface2" Grid.Row="2" Grid.Column="0"></local:CustomTable>
-                <local:CustomTable x:Name="sciChartSurface3" Grid.Row="3" Grid.Column="0"></local:CustomTable>
+                <local:CustomTable x:Name="sciChartSurface3" Grid.Row="3" Grid.Column="0"></local:CustomTable>-->
                 
             </Grid>
-            <GridSplitter Grid.Row="0" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="DarkGray"/>
-            <Grid Grid.Row="0" Grid.Column="2" >
+            <!--<GridSplitter Grid.Row="0" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="DarkGray"/>-->
+            <!--<Grid Grid.Row="0" Grid.Column="2" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -137,7 +137,7 @@
                 <local:CustomTable x:Name="sciChartSurface5" Grid.Row="1" Grid.Column="0"></local:CustomTable>
                 <local:CustomTable x:Name="sciChartSurface6" Grid.Row="2" Grid.Column="0"></local:CustomTable>
                 <local:CustomTable x:Name="sciChartSurface7" Grid.Row="3" Grid.Column="0"></local:CustomTable>
-            </Grid>
+            </Grid>-->
         </Grid>
     </Grid>
 </UserControl>

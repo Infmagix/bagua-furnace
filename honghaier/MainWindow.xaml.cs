@@ -78,18 +78,44 @@ namespace honghaier
             //timerHeartBeat.Start();
 
             InitUI();
+
+            //readTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            //readTimer.Tick += Timer_Read_Elapsed_Test;
+            //readTimer.Start();
         }
 
+        DispatcherTimer readTimer = new DispatcherTimer();
         private void InitUI()
         {
             try
             {
                 //PIDTableExpander.Content = new PIDTableView();
                 /*.Content = new PIDTableView();*/
+
+                //RealTimeDataViewModel rtvm = new RealTimeDataViewModel();
+                //rtvm.RegisterViews(RealTimeView);
+                //Singleton<gRPCImpl>.Instance.BindRealData(rtvm);
+
+                TestViewModel testVM = new TestViewModel();
+                testVM.RegisterViews(MyTestView);
+                Singleton<gRPCImpl>.Instance.BindTestViewModel(testVM);
             }
             catch (Exception exception)
             {
                 ExpUtil.LogProc(log, exception, false);
+            }
+        }
+
+        private void Timer_Read_Elapsed_Test(object sender, EventArgs e)
+        {
+            try
+            {
+                Singleton<gRPCImpl>.Instance.UpdateTestVM(new List<float> { 0, 0, 0, 0 });
+            }
+            catch (Exception ex)
+            {
+                readTimer.Stop();
+                ExpUtil.LogProc(log, ex);
             }
         }
 

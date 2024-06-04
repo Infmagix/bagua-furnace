@@ -1,4 +1,5 @@
 ﻿using Cytek.Generics;
+using SciChart.Charting.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -26,6 +27,8 @@ namespace honghaier
             }
             // Check UAC priviliage
             AdminRelauncher.RelaunchIfNotAdmin();
+
+            SciChartSurface.SetRuntimeLicenseKey("e3deB7gfX+eU3EdsGe2NoZryYACUhN+LFDm+AcVfY97o6DvD3JHB/oPNdq2PUQBe1gj1E9LQw6fZ3+ReYvLz+1Xx6hLdXWOlivNr4k3G+/jPAQGCL3ShvOOjqQFgr0PhdJqHTKJvClrnLgKZ43fsj4Wf7GHvgfwni+lsuI9i5qvH66sDnkgKZv8XDIinHyFBhqIG7/eYYg/5zJKeS5KwwJFrxuHH7wclg9OqDHwYEaN4yqRQAYLAQDWVjQyuEbawk3h3uHcPMgT9KQHGdsGsa5LYKoaKPZHGI1xg+b4NTB3034t/JvxJvTXBx6o/thD37KZkeqnXb2pTrj383z8teM0ecNKrnBU927614eqz4WKfuH1p2FneDZsSIgJZDLACmZMztHWSuYak8FTQoZUigJsOVHfBQmAiUo+3KAWKegnRtLzkfX8UZezKuBwnCa80axRL0DcWscyrMiKWrNhJjxJwRleEB/FKbxvg7aQljjJb8JSN5lm7r4X3Y51hwXySXXjmlHKNybk69CTiufaaHaxmxw==");
         }
     }
 }

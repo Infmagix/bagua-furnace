@@ -31,6 +31,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -46,12 +47,8 @@
                                                     StrokeThickness="1">
 
                     <s:FastLineRenderableSeries.PointMarker>
-                        <s:EllipsePointMarker Width="6"
-                                                      Height="6"
-                                                      Fill="{Binding Path=Stroke,                                    
-                                                                     RelativeSource={RelativeSource Self}}" />
+                        <s:EllipsePointMarker Width="6" Height="6" Fill="{Binding Path=Stroke, RelativeSource={RelativeSource Self}}" />
                     </s:FastLineRenderableSeries.PointMarker>
-
                 </s:FastLineRenderableSeries>
 
                 <s:FastLineRenderableSeries x:Name="renderableSeries1"
@@ -59,10 +56,7 @@
                                                     Stroke="Green"
                                                     StrokeThickness="1">
                     <s:FastLineRenderableSeries.PointMarker>
-                        <s:EllipsePointMarker Width="6"
-                                                      Height="6"
-                                                      Fill="{Binding Path=Stroke,
-                                                                     RelativeSource={RelativeSource Self}}" />
+                        <s:EllipsePointMarker Width="6" Height="6" Fill="{Binding Path=Stroke, RelativeSource={RelativeSource Self}}" />
                     </s:FastLineRenderableSeries.PointMarker>
                 </s:FastLineRenderableSeries>
 
@@ -71,21 +65,17 @@
                                                     Stroke="Blue"
                                                     StrokeThickness="1">
                     <s:FastLineRenderableSeries.PointMarker>
-                        <s:EllipsePointMarker Width="6"
-                                                      Height="6"
-                                                      Fill="{Binding Path=Stroke,
-                                                                     RelativeSource={RelativeSource Self}}" />
+                        <s:EllipsePointMarker Width="6" Height="6" Fill="{Binding Path=Stroke, RelativeSource={RelativeSource Self}}" />
                     </s:FastLineRenderableSeries.PointMarker>
                 </s:FastLineRenderableSeries>
-
             </s:SciChartSurface.RenderableSeries>
 
             <s:SciChartSurface.XAxis>
                 <s:NumericAxis x:Name="numAxis4" AutoRange="Always"
-                                          DrawMinorGridLines="False" MajorDelta="1.0"
+                                          DrawMinorGridLines="False" MajorDelta="1.0" Visibility="Hidden"
                                           DrawMinorTicks="False" DrawMajorBands="False" DrawMajorGridLines="False" DrawMajorTicks="False" 
                                           MaxAutoTicks="1500" MinorsPerMajor="1" FlipCoordinates="False" Focusable="False" 
-                                              Background="LightGray" FontSize="11" DrawLabels="False" AxisTitle="  " AutoTicks="True">
+                                          Background="LightGray" FontSize="11" DrawLabels="False" AxisTitle="  " AutoTicks="True">
                 </s:NumericAxis>
             </s:SciChartSurface.XAxis>
 
@@ -145,16 +135,9 @@
                                                     <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
 
-                                                <Ellipse Width="9"
-                                                                 Height="9"
-                                                                 Margin="3"
-                                                                 Fill="{Binding Stroke,
-                                                                                Converter={StaticResource ColorToBrushConverter}}" />
+                                                <Ellipse Width="9" Height="9" Margin="3" Fill="{Binding Stroke, Converter={StaticResource ColorToBrushConverter}}" />
 
-                                                <TextBlock Grid.Column="1"
-                                                                   Width="90"
-                                                                   Style="{StaticResource tbStyle}"
-                                                                   Text="{Binding SeriesName}" />
+                                                <TextBlock Grid.Column="1" Width="90" Style="{StaticResource tbStyle}" Text="{Binding SeriesName}" />
 
                                                 <!--  When binding to XValue, YValue of type IComparable, StringFormat is mandatory due to a  -->
                                                 <!--  XAML bug that cannot convert IComparable to text, even though underlying type is double  -->
@@ -163,9 +146,7 @@
                                                     <TextBlock Style="{StaticResource tbStyle}" Text="{Binding XValue, StringFormat=\{0:0.00\}}" />
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="3" Orientation="Horizontal">
-                                                    <TextBlock Margin="3"
-                                                                       Style="{StaticResource tbStyle}"
-                                                                       Text="Y: " />
+                                                    <TextBlock Margin="3" Style="{StaticResource tbStyle}" Text="Y: " />
                                                     <TextBlock Style="{StaticResource tbStyle}" Text="{Binding YValue, StringFormat=\{0:0.00\}}" />
                                                 </StackPanel>
 
@@ -180,6 +161,10 @@
             </s:SciChartSurface.Annotations>
         </s:SciChartSurface>
 
+        <StackPanel x:Name="footNoteStack" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+            <!-- 脚标，要精准对位，衬底盘符和对应的位置宽度 -->
+            <Label x:Name="footNote" Content="显示实时数据"/>
+        </StackPanel>
     </Grid>
 
 </UserControl>

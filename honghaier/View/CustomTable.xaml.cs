@@ -32,7 +32,6 @@ namespace honghaier.View
         public CustomTable()
         {
             InitializeComponent();
-
         }
 
         private void TestGenDataAndPlot()

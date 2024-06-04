@@ -1,4 +1,6 @@
-﻿using honghaier.Utility;
+﻿using Cytek.Generics.Utilities;
+using honghaier.Model;
+using honghaier.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,12 +14,13 @@ namespace honghaier.View
     public partial class PIDTableView : UserControl
     {
         private int nAllZones = 8;
-        private int nVisibleZones = 1;
+        private int nVisibleZones = 3;
+        private Dictionary<string, List<PID_Parameter>> zoneID2PidParamList;
 
         // test
         private int nZones = 4;
         private int nPIDs = 4; // 各区域的温度段数
-        private Dictionary<string, List<PID_Parameter>> zoneID2PidParamList;
+
 
         public PID_Parameter GetPIDParam(int zoneIndex, int pidIndex)
         { return zoneID2PidParamList[$"Zone{zoneIndex}"][pidIndex]; }
@@ -33,19 +36,50 @@ namespace honghaier.View
         {
             InitializeComponent();
 
-            //for (int i = 0; i < NumDataSeries; i++)
-            //{
-            //    var dataSeries0 = new XyyDataSeries<DateTime, double>();
-            //    dataSeries0.AcceptsUnsortedData = true;
-            //    dataSeries0.FifoCapacity = FIFOSize;
-            //    listDataSeries.Add(dataSeries0);
-            //}
-
+#if false
             // test
             GenPIDData();
+#endif
 
-
+            LoadPIDTable(@".\Config\SimplePIDTable.xml");
             InitUI();
+        }
+
+        private void LoadPIDTable(string filepath)
+        {
+            try
+            {
+                //file path: @".\Config\SimplePIDConfig.xml";
+                string path = AppDomain.CurrentDomain.BaseDirectory + filepath;
+                var config = (SimplePIDConfig)XmlSerializerManager.Instance.DeserializeFromXml(path, typeof(SimplePIDConfig));
+
+                nAllZones = config.Zones.Count;
+                nVisibleZones = config.HeaterZoneNum;
+                // assert(nAllZones <= nVisibleZones);
+
+                zoneID2PidParamList = new Dictionary<string, List<PID_Parameter>>();
+                for (int i = 0; i < nVisibleZones; i++)
+                {
+                    LogHelper.Debug($"Initializing Zone{i}:", log);
+
+                    var pidParamList = new List<PID_Parameter>();
+                    var pidList = config.Zones[$"Zone{i}"];
+
+                    for (int j = 0; j < pidList.Count; j++)
+                    {
+                        pidParamList.Add(new PID_Parameter(
+                            pidList[j].Index, pidList[j].LowerLimit, pidList[j].UpperLimit,
+                            pidList[j].Kp, pidList[j].Ki, pidList[j].Kd, pidList[j].MAXOUT)
+                        );
+                        LogHelper.Debug(pidParamList[j].ToString(), log);
+                    }
+                    zoneID2PidParamList[$"Zone{i}"] = pidParamList;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"LoadPIDTable: {ex.Message}");
+            }
         }
 
         //private void InitUI(int ii)
@@ -85,22 +119,27 @@ namespace honghaier.View
 
         private void InitUI()
         {
-            for (int i = 0; i < zoneID2PidParamList.Count; i++)
+            try
             {
-                if (PIDTabControl.Items[i] is TabItem tabItem)
+                for (int i = 0; i < zoneID2PidParamList.Count; i++)
                 {
-                    if (tabItem.Content is StackPanel vsp)
+                    if (PIDTabControl.Items[i] is TabItem tabItem)
                     {
-                        var key = $"Zone{i}";
-                        var pidParamList = zoneID2PidParamList[key];
-                        for (int j = 0; j < pidParamList.Count; j++)
+                        if (tabItem.Content is StackPanel vsp)
                         {
-                            var hsp = CreateHorizontalStackPanel(key + $"_{j}_", pidParamList[j]);
-                            vsp.Children.Add(hsp);
+                            var key = $"Zone{i}";
+                            var pidParamList = zoneID2PidParamList[key];
+                            for (int j = 0; j < pidParamList.Count; j++)
+                            {
+                                var hsp = CreateHorizontalStackPanel(key + $"_{j}_", pidParamList[j]);
+                                vsp.Children.Add(hsp);
+                            }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            { MessageBox.Show($"InitUI(): {ex.Message}"); }
         }
 
         private StackPanel CreateHorizontalStackPanel(string id, PID_Parameter pidParam)
@@ -116,27 +155,6 @@ namespace honghaier.View
                 tb = CreateTextBox(id + pidParam.GetPropertyName(i), $"{paramArr[i]}");
                 sp.Children.Add(tb);
             }
-            
-            //TextBox indexTB = CreateTextBox($"{pidParam.Index}");
-            //sp.Children.Add(indexTB);
-
-            //TextBox lowerTB = CreateTextBox($"{pidParam.LowerLimit}");
-            //sp.Children.Add(lowerTB);
-
-            //TextBox upperTB = CreateTextBox($"{pidParam.UpperLimit}");
-            //sp.Children.Add(upperTB);
-
-            //TextBox kpTB = CreateTextBox($"{pidParam.Kp}");
-            //sp.Children.Add(kpTB);
-
-            //TextBox kiTB = CreateTextBox($"{pidParam.Ki}");
-            //sp.Children.Add(kiTB);
-
-            //TextBox kdTB = CreateTextBox($"{pidParam.Kd}");
-            //sp.Children.Add(kdTB);
-
-            //TextBox maxoutTB = CreateTextBox($"{pidParam.MaxOut}");
-            //sp.Children.Add(maxoutTB);
 
             return sp;
         }
@@ -215,109 +233,123 @@ namespace honghaier.View
 
             tb.KeyUp += (s, e) =>
             {
+                try
+                {
                 if (e.Key == Key.Enter)
                 {
-                    //OnTextChanged(s, e);
+                        OnTextChanged(s, e);
 
-                    tb.Background = Brushes.White;
+                        tb.Background = Brushes.White;
                     tb.MoveFocus(new TraversalRequest(FocusNavigationDirection.Down));
                 }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"TextBox KeyUp: {ex.Message}");
+                }
             };
 
+#if false
             tb.TextChanged += (_, e) =>
             {
-#if false
-                if (!string.IsNullOrEmpty(tb.Name))
+                //if (!string.IsNullOrEmpty(tb.Name))
+                //{
+                //    var strs = tb.Name.Split('_');
+                //    var zoneID = int.Parse(strs[0].Substring(4));
+                //    var pidID = int.Parse(strs[1]);
+                //    var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
+
+                //    var curTextVal = double.Parse(tb.Text);
+                //    switch (strs[2])
+                //    {
+                //        case "Index":
+
+                //            break;
+                //        default: break; // error
+                //    }
+                //    if ("Index" == strs[2] && ref2PIDParam.Index != (int)curTextVal)
+                //    {
+                //        ref2PIDParam.Index = (int)curTextVal;
+                //    }
+                //    else if ("LowerLimit" == strs[2] && ref2PIDParam.LowerLimit != curTextVal)
+                //    {
+                //        ref2PIDParam.LowerLimit = curTextVal;
+                //    }
+                //    else if ("UpperLimit" == strs[2] && ref2PIDParam.UpperLimit != curTextVal)
+                //    {
+                //        ref2PIDParam.UpperLimit = curTextVal;
+                //    }
+                //    else if ("Kp" == strs[2] && ref2PIDParam.Kp != curTextVal)
+                //    {
+                //        ref2PIDParam.Kp = curTextVal;
+                //    }
+                //    else if ("Ki" == strs[2] && ref2PIDParam.Ki != curTextVal)
+                //    {
+                //        ref2PIDParam.Ki = curTextVal;
+                //    }
+                //    else if ("Kd" == strs[2] && ref2PIDParam.Kd != curTextVal)
+                //    {
+                //        ref2PIDParam.Kd = curTextVal;
+                //    }
+                //    else if ("MaxOut" == strs[2] && ref2PIDParam.MaxOut != curTextVal)
+                //    {
+                //        ref2PIDParam.MaxOut = curTextVal;
+                //    }
+                //    else
+                //    {
+                //        // error
+                //    }
+
+
+                //    if (!indexPairSet.Contains(tb.Name))
+                //    {
+                //        indexPairSet.Add(tb.Name);
+                //        indexPairList.Add(new Index_Pair(zoneID, pidID));
+                //    }
+                //}
+
+                try
                 {
-                    var strs = tb.Name.Split('_');
-                    var zoneID = int.Parse(strs[0].Substring(4));
-                    var pidID = int.Parse(strs[1]);
-                    var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
+                    if (!string.IsNullOrEmpty(tb.Name))
+                    {
+                        var strs = tb.Name.Split('_');
+                        var zoneID = int.Parse(strs[0].Substring(4));
+                        var pidID = int.Parse(strs[1]);
+                        var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
 
-                    var curTextVal = double.Parse(tb.Text);
-                    switch (strs[2])
-                    {
-                        case "Index":
+                        var curTextVal = double.Parse(tb.Text);
+                        switch (strs[2])
+                        {
+                            case "Index":
+                                ref2PIDParam.Index = (int)curTextVal; break;
+                            case "LowerLimit":
+                                ref2PIDParam.LowerLimit = curTextVal; break;
+                            case "UpperLimit":
+                                ref2PIDParam.UpperLimit = curTextVal; break;
+                            case "Kp":
+                                ref2PIDParam.Kp = curTextVal; break;
+                            case "Ki":
+                                ref2PIDParam.Ki = curTextVal; break;
+                            case "Kd":
+                                ref2PIDParam.Kd = curTextVal; break;
+                            case "MaxOut":
+                                ref2PIDParam.MaxOut = curTextVal; break;
+                            default: break; // error
+                        }
 
-                            break;
-                        default: break; // error
-                    }
-                    if ("Index" == strs[2] && ref2PIDParam.Index != (int)curTextVal)
-                    {
-                        ref2PIDParam.Index = (int)curTextVal;
-                    }
-                    else if ("LowerLimit" == strs[2] && ref2PIDParam.LowerLimit != curTextVal)
-                    {
-                        ref2PIDParam.LowerLimit = curTextVal;
-                    }
-                    else if ("UpperLimit" == strs[2] && ref2PIDParam.UpperLimit != curTextVal)
-                    {
-                        ref2PIDParam.UpperLimit = curTextVal;
-                    }
-                    else if ("Kp" == strs[2] && ref2PIDParam.Kp != curTextVal)
-                    {
-                        ref2PIDParam.Kp = curTextVal;
-                    }
-                    else if ("Ki" == strs[2] && ref2PIDParam.Ki != curTextVal)
-                    {
-                        ref2PIDParam.Ki = curTextVal;
-                    }
-                    else if ("Kd" == strs[2] && ref2PIDParam.Kd != curTextVal)
-                    {
-                        ref2PIDParam.Kd = curTextVal;
-                    }
-                    else if ("MaxOut" == strs[2] && ref2PIDParam.MaxOut != curTextVal)
-                    {
-                        ref2PIDParam.MaxOut = curTextVal;
-                    }
-                    else
-                    {
-                        // error
-                    }
-
-
-                    if (!indexPairSet.Contains(tb.Name))
-                    {
-                        indexPairSet.Add(tb.Name);
-                        indexPairList.Add(new Index_Pair(zoneID, pidID));
+                        if (!indexPairSet.Contains(tb.Name))
+                        {
+                            indexPairSet.Add(tb.Name);
+                            indexPairList.Add(new Index_Pair(zoneID, pidID));
+                        }
                     }
                 }
-#endif
-
-                if (!string.IsNullOrEmpty(tb.Name))
+                catch (Exception ex)
                 {
-                    var strs = tb.Name.Split('_');
-                    var zoneID = int.Parse(strs[0].Substring(4));
-                    var pidID = int.Parse(strs[1]);
-                    var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
-
-                    var curTextVal = double.Parse(tb.Text);
-                    switch (strs[2])
-                    {
-                        case "Index":
-                            ref2PIDParam.Index = (int)curTextVal; break;
-                        case "LowerLimit":
-                            ref2PIDParam.LowerLimit = curTextVal; break;
-                        case "UpperLimit":
-                            ref2PIDParam.UpperLimit = curTextVal; break;
-                        case "Kp":
-                            ref2PIDParam.Kp = curTextVal; break;
-                        case "Ki":
-                            ref2PIDParam.Ki = curTextVal; break;
-                        case "Kd":
-                            ref2PIDParam.Kd = curTextVal; break;
-                        case "MaxOut":
-                            ref2PIDParam.MaxOut = curTextVal; break;
-                        default: break; // error
-                    }
-                    
-                    if (!indexPairSet.Contains(tb.Name))
-                    {
-                        indexPairSet.Add(tb.Name);
-                        indexPairList.Add(new Index_Pair(zoneID, pidID));
-                    }
+                    MessageBox.Show($"TextBox TextChanged: {ex.Message}");
                 }
             };
+#endif
 
 #if false
             tb.TextChanged += (sender, e) =>
@@ -359,53 +391,47 @@ namespace honghaier.View
 
         private void OnTextChanged(object sender, KeyEventArgs e)
         {
-            var tb = sender as TextBox;
-            if (!string.IsNullOrEmpty(tb.Name))
+            try
             {
-                var strs = tb.Name.Split('_');
-                var zoneID = int.Parse(strs[0].Substring(4));
-                int pidID = int.Parse(strs[1]);
-                var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
-
-                if ("Index" == strs[2])
-                    ref2PIDParam.Index = int.Parse(tb.Text);
-                else if ("LowerLimit" == strs[2])
-                    ref2PIDParam.LowerLimit = double.Parse(tb.Text);
-                else if ("UpperLimit" == strs[2])
-                    ref2PIDParam.UpperLimit = double.Parse(tb.Text);
-                else if ("Kp" == strs[2])
-                    ref2PIDParam.Kp = double.Parse(tb.Text);
-                else if ("Ki" == strs[2])
-                    ref2PIDParam.Ki = double.Parse(tb.Text);
-                else if ("Kd" == strs[2])
-                    ref2PIDParam.Kd = double.Parse(tb.Text);
-                else if ("MaxOut" == strs[2])
-                    ref2PIDParam.MaxOut = double.Parse(tb.Text);
-                else
+                var tb = sender as TextBox;
+                if (!string.IsNullOrEmpty(tb.Name))
                 {
-                    // error
+                    var strs = tb.Name.Split('_');
+                    var zoneID = int.Parse(strs[0].Substring(4));
+                    int pidID = int.Parse(strs[1]);
+                    var ref2PIDParam = zoneID2PidParamList[strs[0]][pidID];
+
+                    if ("Index" == strs[2])
+                        ref2PIDParam.Index = int.Parse(tb.Text ?? "-42");
+                    else if ("LowerLimit" == strs[2])
+                        ref2PIDParam.LowerLimit = double.Parse(tb.Text ?? "-42");
+                    else if ("UpperLimit" == strs[2])
+                        ref2PIDParam.UpperLimit = double.Parse(tb.Text ?? "-42");
+                    else if ("Kp" == strs[2])
+                        ref2PIDParam.Kp = double.Parse(tb.Text ?? "-42");
+                    else if ("Ki" == strs[2])
+                        ref2PIDParam.Ki = double.Parse(tb.Text ?? "-42");
+                    else if ("Kd" == strs[2])
+                        ref2PIDParam.Kd = double.Parse(tb.Text ?? "-42");
+                    else if ("MaxOut" == strs[2])
+                        ref2PIDParam.MaxOut = double.Parse(tb.Text ?? "-42");
+
+                    LogHelper.Debug(strs[0] + " changed:", log);
+                    LogHelper.Debug(ref2PIDParam.ToString(), log);
+
+                    //indexPairList.Add(new Index_Pair(zoneID, pidID));
+                    
+                    if (!indexPairSet.Contains(tb.Name))
+                    {
+                        indexPairSet.Add(tb.Name);
+                        indexPairList.Add(new Index_Pair(zoneID, pidID));
+                    }
                 }
-
-                LogHelper.Debug(strs[0] + " changed:", log);
-                LogHelper.Debug(ref2PIDParam.ToString(), log);
-
-                indexPairList.Add(new Index_Pair(zoneID, pidID));
             }
-        }
-    
-
-
-
-
-        // 辅助方法：创建一个包含Label和TextBox的垂直StackPanel  
-        private StackPanel CreateVerticalStack(string labelContent, string textBoxText)
-        {
-            StackPanel stackPanel = new StackPanel { Orientation = Orientation.Vertical };
-            stackPanel.Children.Add(new Label { Content = labelContent });
-            TextBox textBox = new TextBox { Text = textBoxText, TextAlignment = TextAlignment.Center };
-            //textBox.Name = labelContent + "_TBox"; // 注意：这里简单地将Name设置为Content_TBox，可能需要根据实际逻辑进行调整  
-            stackPanel.Children.Add(textBox);
-            return stackPanel;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"TextBox OnTextChanged: {ex.Message}");
+            }
         }
 
         // test
@@ -440,32 +466,24 @@ namespace honghaier.View
 
     public class PID_Parameter
     {
-        private int index;
-        private double lowerLimit;
-        private double upperLimit;
-        private double kp;
-        private double ki;
-        private double kd;
-        private double maxOut;
-
         public PID_Parameter(int index, double ll, double ul, double kp, double ki, double kd, double mo)
         {
-            this.index = index;
-            lowerLimit = ll;
-            upperLimit = ul;
-            this.kp = kp;
-            this.ki = ki;
-            this.kd = kd;
-            maxOut = mo;
+            Index = index;
+            LowerLimit = ll;
+            UpperLimit = ul;
+            Kp = kp;
+            Ki = ki;
+            Kd = kd;
+            MaxOut = mo;
         }
 
-        public int Index { get => index; set => index = value; }
-        public double LowerLimit { get => lowerLimit; set => lowerLimit = value; }
-        public double UpperLimit { get => upperLimit; set => upperLimit = value; }
-        public double Kp { get => kp; set => kp = value; }
-        public double Ki { get => ki; set => ki = value; }
-        public double Kd { get => kd; set => kd = value; }
-        public double MaxOut { get => maxOut; set => maxOut = value; }
+        public int Index { get; set; }
+        public double LowerLimit { get; set; }
+        public double UpperLimit { get; set; }
+        public double Kp { get; set; }
+        public double Ki { get; set; }
+        public double Kd { get; set; }
+        public double MaxOut { get; set; }
 
         public double[] GetAllValues()
         {

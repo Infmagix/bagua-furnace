@@ -114,6 +114,9 @@
     <Reference Include="SciChart.Charting, Version=6.6.0.26505, Culture=neutral, PublicKeyToken=b55dd9efe817e823, processorArchitecture=MSIL">
       <HintPath>..\packages\SciChart.6.6.0.26505\lib\net452\SciChart.Charting.dll</HintPath>
     </Reference>
+    <Reference Include="SciChart.Charting3D, Version=6.6.0.26505, Culture=neutral, PublicKeyToken=b55dd9efe817e823, processorArchitecture=MSIL">
+      <HintPath>..\packages\SciChart3D.6.6.0.26505\lib\net452\SciChart.Charting3D.dll</HintPath>
+    </Reference>
     <Reference Include="SciChart.Core, Version=6.6.0.26505, Culture=neutral, PublicKeyToken=b55dd9efe817e823, processorArchitecture=MSIL">
       <HintPath>..\packages\SciChart.6.6.0.26505\lib\net452\SciChart.Core.dll</HintPath>
     </Reference>
@@ -121,7 +124,15 @@
       <HintPath>..\packages\SciChart.6.6.0.26505\lib\net452\SciChart.Data.dll</HintPath>
     </Reference>
     <Reference Include="SciChart.Drawing, Version=6.6.0.26505, Culture=neutral, PublicKeyToken=b55dd9efe817e823, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SciChart.6.6.0.26505\lib\net452\SciChart.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Drawing.DirectX, Version=6.6.0.26505, Culture=neutral, PublicKeyToken=b55dd9efe817e823, processorArchitecture=MSIL">
+      <HintPath>..\packages\SciChart.DirectX.6.6.0.26505\lib\net452\SciChart.Drawing.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Examples.ExternalDependencies, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\repos\bin\net48\SciChart.Examples.ExternalDependencies.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -210,6 +221,7 @@
     <Compile Include="Model\MBTCModel.cs" />
     <Compile Include="Model\PIDTableModel.cs" />
     <Compile Include="Model\RealTimeDataModel.cs" />
+    <Compile Include="Model\TestDataModel.cs" />
     <Compile Include="Utility\Const.cs" />
     <Compile Include="Utility\DelegateCommand.cs" />
     <Compile Include="Utility\Exception.cs" />
@@ -217,6 +229,7 @@
     <Compile Include="Utility\Singleton.cs" />
     <Compile Include="Utility\TimeScaleDBHelper.cs" />
     <Compile Include="ViewModel\RealTimeDataViewModel.cs" />
+    <Compile Include="ViewModel\TestViewModel.cs" />
     <Compile Include="View\CustomTable.xaml.cs">
       <DependentUpon>CustomTable.xaml</DependentUpon>
     </Compile>
@@ -225,6 +238,9 @@
     </Compile>
     <Compile Include="View\RealTimeDataView.xaml.cs">
       <DependentUpon>RealTimeDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestView.xaml.cs">
+      <DependentUpon>TestView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -249,6 +265,10 @@
     <Page Include="View\RealTimeDataView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +323,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Grpc.Core.2.46.3\build\net45\Grpc.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Core.2.46.3\build\net45\Grpc.Core.targets'))" />
     <Error Condition="!Exists('..\packages\MaterialDesignThemes.5.0.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.5.0.0\build\MaterialDesignThemes.targets'))" />
+    <Error Condition="!Exists('..\packages\SciChart.DirectX.6.6.0.26505\build\SciChart.DirectX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SciChart.DirectX.6.6.0.26505\build\SciChart.DirectX.targets'))" />
   </Target>
   <Import Project="..\packages\MaterialDesignThemes.5.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.5.0.0\build\MaterialDesignThemes.targets')" />
+  <Import Project="..\packages\SciChart.DirectX.6.6.0.26505\build\SciChart.DirectX.targets" Condition="Exists('..\packages\SciChart.DirectX.6.6.0.26505\build\SciChart.DirectX.targets')" />
 </Project>
